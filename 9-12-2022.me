@@ -1,0 +1,25 @@
+The intention of today Monday  9/12/2022 was to research more about my feature in the editor that is the collaborative features. Base on Google Suites tool that now days is called Google Workspace. Jim send me some links that i study to understand i little bit more about how this is possible and what the options are.
+The principal problem with this is that if two people are working on the same part and writing, they will generate changes that later when it is updated, they will see that the texts were combined and that paragraph became meaningless and they have to fix everything again to see if they can add theirs without a way to generate any kind of problem. So its like super necessary to have something that other persons could see that someone is writing there so theres no combination. 
+Jim was telling me that theres three types of collaboratives There are 3 basic approaches: CRDT, OT, and for lack of a better name "git-like". 
+For example google workspace uses OT.
+
+And what is OT? OT mean Operationa Transformation.
+OT is  based system applies local changes to the local document immediately, and broadcasts them to other users. Those users will transform and apply them when they get them. In order to know exactly which local changes a remote change should be transformed through, such a system also has to send along some representation of the state of the document at the time the change was made.
+The problem with OT is that there are a lot of algorithms and they need a lot of time and are very difficult to complement correctly.
+
+-Codemirror use OT, so we "inherit" that.
+-Prosemirror uses "git-like", so we use that as well.
+
+Both Codemirror and Prosemirror are by the same author, so the different approaches are reflective of fundamental tradeoffs of plain text and rich text editing.
+
+Jim explain me the difference between the OT and the Codemirror:
+
+A simple example is start with hey pablo and then concurrently I bold part and you italicise part and we end up with something that's not even legal like <b>hey <i>pab</b>lo</i> 
+Coremirror doesn't have to handle that case, because everything is a list of characters. ProseMirror see's the document as a tree, or even a dag (directed acyclic graph), and OT just falls apart in this case and you end up with something that's git-like. By git-like I mean you and I have to take turns, so you eliminate the concurrency problem. If you bold and I italicize concurrently, then you will get a "merge conflict"; this happens in git. First writer "wins", then the second writer must change its request to something legal like <b>hey</b><i><b>pab</b>lo</i>
+The tradeoff is that you lose some concurrency; git is terrible if 1 million people try to change the same line concurrently. OT on the other hand is powerful enough to handle that. But most documents are edited by 1 or 2 people concurrently, and git is fine for that.
+
+
+There are other vocabulary that is more complicated to understand so tomorrow im going to read it again that are like the position mapping, mapping bias, the rebasing that actually are not that complicated but we need to be careful with those.
+
+
+Tomorrow im going to do the research on base of Martin Kleppman in his youtube channel.
